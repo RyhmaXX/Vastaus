@@ -1,0 +1,47 @@
+<br>
+
+<!--Text question-->
+<div class="well" ng-show="curType == 1">
+	<p>teksti kysymys:</p>
+	<h4>{{ curNum + ". " + curQuestion }}</h4>
+	
+	<br>
+	
+	<textarea class="form-control" rows="5" ng-model="answer"></textarea>
+	
+	<br>
+	
+	<button class="btn btn-block btn-primary" ng-click="sendAnswer()">Seuraava</button>
+</div>
+
+<!--Numeric question-->
+<div class="well" ng-show="curType == 2">
+	<p>numeerinen kysymys:</p>
+	<h4>{{ curNum + ". " + curQuestion }}</h4>
+	
+	<br>
+	
+	<input type="number" class="form-control" ng-model="answer"></input>
+	
+	<br>
+	
+	<button class="btn btn-block btn-primary" ng-click="sendAnswer()">Seuraava</button>
+</div>
+
+<center>
+	<table>
+		<tr>
+			<!--<td><button class="btn btn-primary" ng-click="changeQuestion(-1)"><span class="glyphicon glyphicon-chevron-left"></span></button></td>-->
+			<td><h4>{{curNum + " / " + questionCount}}</h4></td>
+			<!--<td><button class="btn btn-primary" ng-click="changeQuestion(1)"><span class="glyphicon glyphicon-chevron-right"></button></td>-->
+		</tr>
+	</table>	
+</center>
+
+<br>
+
+<p>curNum: {{curNum}}</p>
+<p>curInd: {{curInd}}</p>
+<p>Q: {{curQuestion}}</p>
+<p>type: {{curType}}</p>
+<p>A: {{answer}}</p>

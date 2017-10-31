@@ -1,7 +1,7 @@
 <?php
 	define("DB_NAME", "fishregistrydb");
-	define("DB_USER", "root");
-	define("DB_PASSWD", "");
+	define("DB_USER", "p2");
+	define("DB_PASSWD", "FWvpOF5lQ6uhBAmY");
 	define("DB_HOST", "localhost");
 	
 	// tehdään connect tietokantapalvelimelle
