@@ -26,8 +26,8 @@
 	
 	<table style="width:100%;">
 		<tr>
-			<td><button class="btn btn-block btn-primary" ng-click="changeQuestion(-1)">Edellinen</button></td>
-			<td><button class="btn btn-block btn-primary" ng-click="sendAnswer(textAnswer)">Seuraava</button></td>
+			<td><button class="btn btn-block btn-primary" ng-click="sendAnswer(textAnswer, -1)">Edellinen</button></td>
+			<td><button class="btn btn-block btn-primary" ng-click="sendAnswer(textAnswer, 1)">Seuraava</button></td>
 		</tr>
 	</table>
 
@@ -46,8 +46,8 @@
 	
 	<table style="width:100%;">
 		<tr>
-			<td><button class="btn btn-block btn-primary" ng-click="changeQuestion(-1)">Edellinen</button></td>
-			<td><button class="btn btn-block btn-primary" ng-click="sendAnswer(numAnswer)">Seuraava</button></td>
+			<td><button class="btn btn-block btn-primary" ng-click="sendAnswer(numAnswer, -1)">Edellinen</button></td>
+			<td><button class="btn btn-block btn-primary" ng-click="sendAnswer(numAnswer, 1)">Seuraava</button></td>
 		</tr>
 	</table>
 
@@ -68,8 +68,8 @@
 	
 	<table style="width:100%;">
 		<tr>
-			<td><button class="btn btn-block btn-primary" ng-click="changeQuestion(-1)">Edellinen</button></td>
-			<td><button class="btn btn-block btn-primary" ng-click="sendAnswer(boolAnswer)">Seuraava</button></td>
+			<td><button class="btn btn-block btn-primary" ng-click="sendAnswer(boolAnswer, -1)">Edellinen</button></td>
+			<td><button class="btn btn-block btn-primary" ng-click="sendAnswer(boolAnswer, 1)">Seuraava</button></td>
 		</tr>
 	</table>
 
@@ -87,8 +87,8 @@
 	
 	<table style="width:100%;">
 		<tr>
-			<td><button class="btn btn-block btn-primary" ng-click="changeQuestion(-1)">Edellinen</button></td>
-			<td><button class="btn btn-block btn-primary" ng-click="sendAnswer(radioChoice)">Seuraava</button></td>
+			<td><button class="btn btn-block btn-primary" ng-click="sendAnswer(radioChoice, -1)">Edellinen</button></td>
+			<td><button class="btn btn-block btn-primary" ng-click="sendAnswer(radioChoice, 1)">Seuraava</button></td>
 		</tr>
 	</table>
 	
@@ -108,8 +108,8 @@
 	
 	<table style="width:100%;">
 		<tr>
-			<td><button class="btn btn-block btn-primary" ng-click="changeQuestion(-1)">Edellinen</button></td>
-			<td><button class="btn btn-block btn-primary" ng-click="sendAnswer(choices)">Seuraava</button></td>
+			<td><button class="btn btn-block btn-primary" ng-click="sendAnswer(choices, -1)">Edellinen</button></td>
+			<td><button class="btn btn-block btn-primary" ng-click="sendAnswer(choices, 1)">Seuraava</button></td>
 		</tr>
 	</table>
 	
@@ -141,8 +141,8 @@
 	
 	<table style="width:100%;">
 		<tr>
-			<td><button class="btn btn-block btn-primary" ng-click="changeQuestion(-1)">Edellinen</button></td>
-			<td><button class="btn btn-block btn-primary" ng-click="sendAnswer(matrixAnswer)">Seuraava</button></td>
+			<td><button class="btn btn-block btn-primary" ng-click="sendAnswer(matrixAnswer, -1)">Edellinen</button></td>
+			<td><button class="btn btn-block btn-primary" ng-click="sendAnswer(matrixAnswer, 1)">Seuraava</button></td>
 		</tr>
 	</table>
 </div>
