@@ -10,9 +10,13 @@ app.controller("pollCtrl", function ($scope, $window, $http, $location){
 	$scope.numAnswer = null;
 	$scope.boolAnswer = null;
 	$scope.choiceAnswer = null;
-	$scope.multichoiceAnswer = null;
+	$scope.choices = null;
 	$scope.oldAnswers = null;
-	$scope.choices = {Hauki: false, Ahven: false, Kuha: false, };
+	$scope.radioChoice = null;
+	$scope.matrix = null;
+	$scope.matrixAnswer = null;
+	
+	$scope.inputTypes = [null, "number", "number", "text", "number"];
 	
 	var setOldAnswer = function() {
 		if ($scope.oldAnswers != null) {
@@ -28,13 +32,15 @@ app.controller("pollCtrl", function ($scope, $window, $http, $location){
 						case 3:
 							$scope.boolAnswer = $scope.oldAnswers[i].answer;
 							break;
-						case 4:
-							$scope.choiceAnswer = $scope.oldAnswers[i].answer;
+						case 100:
+							$scope.radioChoice = $scope.oldAnswers[i].answer;
 							break;
-						case 5:
-							$scope.multichoiceAnswer = $scope.oldAnswers[i].answer;
+						case 101:
+							$scope.choices = $scope.oldAnswers[i].answer;
 							break;	
-						
+						case 201:
+							$scope.matrixAnswer = $scope.oldAnswers[i].answer;
+							break;
 						default:
 							alert("error with answers!");
 					}
@@ -43,10 +49,53 @@ app.controller("pollCtrl", function ($scope, $window, $http, $location){
 			}
 		}
 	};
-    
-
-
-
+	
+	var setExtras = function() {
+		if ($scope.curType > 99 && $scope.curType < 200) {
+			// Choice
+			
+			var extra = $scope.questions[$scope.curInd].extra;
+			
+			if ($scope.curType == 100) {
+				$scope.choices = extra;
+				/*
+				if ($scope.oldAnswers == null) {
+					$scope.radioChoice = $scope.choices[0].num;
+				}
+				*/
+			} else if ($scope.curType == 101){
+				$scope.choices = {};
+			
+				for (var i = 0; i < extra.length; i++) {
+					var name = extra[i].name;
+					
+					$scope.choices[name] = false;
+				}
+			}
+			
+		} else if ($scope.curType > 199) {
+			// Matrix
+			$scope.matrix = $scope.questions[$scope.curInd].extra;
+			
+			var rowCount = $scope.matrix.rows.length;
+			var columnCount = $scope.matrix.columns.length;
+			
+			var rows = [];
+			
+			for (var i = 0; i < rowCount; i++) {
+				
+				var column = [];
+				
+				for (var j = 0; j < columnCount; j++) {
+					column[j] = null;
+				}
+				
+				rows[i] = column;
+			}
+			
+			$scope.matrixAnswer = rows;
+		}
+	};
 	
 	$http.get("php/getQuestions.php").then(function(response) {
 		
@@ -62,6 +111,8 @@ app.controller("pollCtrl", function ($scope, $window, $http, $location){
 				$scope.oldAnswers = response.data.answers;
 				setOldAnswer();
 			}
+			
+			setExtras();
 		} else {
 			$location.path("/");
 		}
@@ -79,6 +130,7 @@ app.controller("pollCtrl", function ($scope, $window, $http, $location){
 			$scope.curQuestion = $scope.questions[$scope.curInd].question;
 			$scope.curType = $scope.questions[$scope.curInd].type;
 			
+			setExtras();
 			setOldAnswer();
 		}
 	};
