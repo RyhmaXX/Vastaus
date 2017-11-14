@@ -15,7 +15,7 @@
 
 <!--Text question-->
 <div class="well" ng-show="curType == 1">
-	<!--<p>teksti kysymys:</p>-->
+	<p>teksti kysymys:</p>
 	<h4>{{ curNum + ". " + curQuestion }}</h4>
 	
 	<br>
@@ -29,7 +29,7 @@
 
 <!--Numeric question-->
 <div class="well" ng-show="curType == 2">
-	<!--<p>numeerinen kysymys:</p>-->
+	<p>numeerinen kysymys:</p>
 	<h4>{{ curNum + ". " + curQuestion }}</h4>
 	
 	<br>
@@ -41,12 +41,64 @@
 	<button class="btn btn-block btn-primary" ng-click="sendAnswer(numAnswer)">Seuraava</button>
 </div>
 
-<!--
-<br>
+<!--<p>Choice question:</p>-->
+<div class="well" ng-show="curType == 100">
+	<p>Valinta kysymys:</p>
+	<h4>{{ curNum + ". " + curQuestion }}</h4>
+	
+	<br>
+	
+	<form>
+	  <label><input type="radio" ng-model="choiceAnswer" value="Hauki"> Hauki</label><br>
+	  <label><input type="radio" ng-model="choiceAnswer" value="Särki"> Särki</label><br>
+	  <label><input type="radio" ng-model="choiceAnswer" value="Ahven"> Ahven</label><br>
+	  <label><input type="radio" ng-model="choiceAnswer" value=""> Ei Valintaa</label><br>
+	</form>
+	
+	<br>
+	
+	<button class="btn btn-block btn-primary" ng-click="sendAnswer(choiceAnswer)">Seuraava</button>
+</div>
 
+<!--<p>Boolean question:</p>-->
+<div class="well" ng-show="curType == 3">
+	<p>Kyllä/ei kysymys:</p>
+	<h4>{{ curNum + ". " + curQuestion }}</h4>
+	
+	<br>
+	
+	<form>
+	  <label><input type="radio" ng-model="boolAnswer" value="Kyllä"> Kyllä</label><br>
+	  <label><input type="radio" ng-model="boolAnswer" value="Ei"> Ei</label><br>
+	</form>
+	
+	<br>
+	
+	<button class="btn btn-block btn-primary" ng-click="sendAnswer(boolAnswer)">Seuraava</button>
+</div>
+
+<!--<p>Monivalinta question:</p>-->
+<div class="well" ng-show="curType == 101">
+	<p>Monivalinta:</p>
+	<h4>{{ curNum + ". " + curQuestion }}</h4>
+	
+	<br>
+	
+    <div ng-repeat="(choice,enabled) in choices">
+		<input type="checkbox" ng-model="choices[choice]"> {{choice}}
+    </div>
+
+	<br>
+	
+	<button class="btn btn-block btn-primary" ng-click="sendAnswer(choices)">Seuraava</button>
+</div>
+
+<br>
+<!--
 <p>curNum: {{curNum}}</p>
 <p>curInd: {{curInd}}</p>
 <p>Q: {{curQuestion}}</p>
 <p>type: {{curType}}</p>
 <p>A: {{answer}}</p>
+<p>colors: {{choices}}</p>
 -->
