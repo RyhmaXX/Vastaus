@@ -9,7 +9,6 @@ app.controller("pollCtrl", function ($scope, $window, $http, $location){
 	$scope.textAnswer = null;
 	$scope.numAnswer = null;
 	$scope.boolAnswer = null;
-	$scope.choiceAnswer = null;
 	$scope.choices = null;
 	$scope.oldAnswers = null;
 	$scope.radioChoice = null;
@@ -58,11 +57,7 @@ app.controller("pollCtrl", function ($scope, $window, $http, $location){
 			
 			if ($scope.curType == 100) {
 				$scope.choices = extra;
-				/*
-				if ($scope.oldAnswers == null) {
-					$scope.radioChoice = $scope.choices[0].num;
-				}
-				*/
+
 			} else if ($scope.curType == 101){
 				$scope.choices = {};
 			
@@ -95,6 +90,7 @@ app.controller("pollCtrl", function ($scope, $window, $http, $location){
 			
 			$scope.matrixAnswer = rows;
 		}
+		setOldAnswer();
 	};
 	
 	var fetch = function() {	
@@ -135,7 +131,7 @@ app.controller("pollCtrl", function ($scope, $window, $http, $location){
 			$scope.curType = $scope.questions[$scope.curInd].type;
 			
 			setExtras();
-			setOldAnswer();
+			
 		}
 	};
 	
@@ -147,17 +143,16 @@ app.controller("pollCtrl", function ($scope, $window, $http, $location){
 		
 		$http.post("php/setAnswer.php", data).then(function(response) {
 			if (response.data.code == 0) {
-				// Next/Previous question
-				if ($scope.curInd < $scope.questionCount - 1) {
-					$scope.changeQuestion(num);
-					
 				// Poll has ended
-				} else {
+				if ($scope.curInd >= $scope.questionCount - 1 && num > 0) {
 					alert("Kiitos vastauksista! Kysely on päättynyt");
 					$location.path("/");
+				
+				// Next/Previous question
+				} else {
+					$scope.changeQuestion(num);
 				}
 				
-				$scope.answer = null;
 			} else {
 				alert("Virhe tallennuksessa! Yritä uudelleen...");
 			}
