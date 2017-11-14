@@ -2,9 +2,45 @@
 	
 	session_start();
 	
-	try {
+	include("db.inc");
+	
+	function getAnswers($conn) {
 		
-		include("db.inc");
+		$poll = $_SESSION["poll"];
+		$user = $_SESSION["user"];
+		
+		$query = $conn->prepare("SELECT answer, question_id
+								FROM answer
+								WHERE question_poll_id = ? AND user_id = ?
+								ORDER BY question_id");
+		$query->bind_param("ii", $poll, $user);
+		$query->execute();
+		
+		$result = $query->get_result();
+		
+		if (mysqli_num_rows($result) > 0) {
+		
+			$answers = [];
+					
+			while ($row = $result->fetch_assoc()) {
+				$ans = json_decode($row["answer"]);
+				$question_num = $row["question_id"];
+				$type = $row["type"];
+				
+				$a = array(
+					"answer" => $ans,
+					"question" => $question_num,
+				);
+				
+				array_push($answers, $a);
+			}
+		} else {
+			$answers = null;
+		}
+		return $answers;
+	}
+	
+	try {
 		
 		$resp = [];
 		
@@ -41,6 +77,7 @@
 				
 				$resp["code"] = 0;
 				$resp["questions"] = $questions;
+				$resp["answers"] = getAnswers($conn);
 				
 			} else {
 				// SQL error
@@ -55,7 +92,7 @@
 		$resp = [];
 		$resp["code"] = -1;
 	}
-	
+
 	echo json_encode($resp);
 	
 ?>
