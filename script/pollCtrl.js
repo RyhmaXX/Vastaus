@@ -97,29 +97,33 @@ app.controller("pollCtrl", function ($scope, $window, $http, $location){
 		}
 	};
 	
-	$http.get("php/getQuestions.php").then(function(response) {
-		
-		if (response.data.code == 0) {
-			$scope.questions = response.data.questions;
-			$scope.curNum = $scope.questions[$scope.curInd].num
-			$scope.curQuestion = $scope.questions[$scope.curInd].question;
-			$scope.curType = $scope.questions[$scope.curInd].type;
-			$scope.questionCount = $scope.questions.length;
+	var fetch = function() {	
+		$http.get("php/getQuestions.php").then(function(response) {
 			
-			if (response.data.answers != null) {
-				alert("Olet jo vastannut tähän kyselyyn, voit halutessasi muuttaa vastauksiasi.");
-				$scope.oldAnswers = response.data.answers;
-				setOldAnswer();
+			if (response.data.code == 0) {
+				$scope.questions = response.data.questions;
+				$scope.curNum = $scope.questions[$scope.curInd].num
+				$scope.curQuestion = $scope.questions[$scope.curInd].question;
+				$scope.curType = $scope.questions[$scope.curInd].type;
+				$scope.questionCount = $scope.questions.length;
+				
+				if (response.data.answers != null) {
+					$scope.oldAnswers = response.data.answers;
+					setOldAnswer();
+				}
+				
+				setExtras();
+			} else {
+				$location.path("/");
 			}
 			
-			setExtras();
-		} else {
-			$location.path("/");
-		}
-		
-	});
+		});
+	};
 	
 	$scope.changeQuestion = function(num) {
+		
+		fetch();
+		
 		var length = $scope.questions.length
 		
 		var newIndex = $scope.curInd + num;
@@ -135,7 +139,7 @@ app.controller("pollCtrl", function ($scope, $window, $http, $location){
 		}
 	};
 	
-	$scope.sendAnswer = function(answer) {
+	$scope.sendAnswer = function(answer, num) {
 		var data = {
 			'answer' : answer,
 			'num' : $scope.curNum
@@ -143,9 +147,9 @@ app.controller("pollCtrl", function ($scope, $window, $http, $location){
 		
 		$http.post("php/setAnswer.php", data).then(function(response) {
 			if (response.data.code == 0) {
-				// Next question
+				// Next/Previous question
 				if ($scope.curInd < $scope.questionCount - 1) {
-					$scope.changeQuestion(1);
+					$scope.changeQuestion(num);
 					
 				// Poll has ended
 				} else {
@@ -159,4 +163,6 @@ app.controller("pollCtrl", function ($scope, $window, $http, $location){
 			}
 		});
 	};
+	
+	fetch();
 });
