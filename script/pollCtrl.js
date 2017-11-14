@@ -8,7 +8,11 @@ app.controller("pollCtrl", function ($scope, $window, $http, $location){
 	$scope.questionCount = 0;
 	$scope.textAnswer = null;
 	$scope.numAnswer = null;
+	$scope.boolAnswer = null;
+	$scope.choiceAnswer = null;
+	$scope.multichoiceAnswer = null;
 	$scope.oldAnswers = null;
+	$scope.choices = {Hauki: false, Ahven: false, Kuha: false, };
 	
 	var setOldAnswer = function() {
 		if ($scope.oldAnswers != null) {
@@ -21,6 +25,16 @@ app.controller("pollCtrl", function ($scope, $window, $http, $location){
 						case 2:
 							$scope.numAnswer = $scope.oldAnswers[i].answer;
 							break;
+						case 3:
+							$scope.boolAnswer = $scope.oldAnswers[i].answer;
+							break;
+						case 4:
+							$scope.choiceAnswer = $scope.oldAnswers[i].answer;
+							break;
+						case 5:
+							$scope.multichoiceAnswer = $scope.oldAnswers[i].answer;
+							break;	
+						
 						default:
 							alert("error with answers!");
 					}
@@ -29,6 +43,10 @@ app.controller("pollCtrl", function ($scope, $window, $http, $location){
 			}
 		}
 	};
+    
+
+
+
 	
 	$http.get("php/getQuestions.php").then(function(response) {
 		
@@ -66,7 +84,6 @@ app.controller("pollCtrl", function ($scope, $window, $http, $location){
 	};
 	
 	$scope.sendAnswer = function(answer) {
-		
 		var data = {
 			'answer' : answer,
 			'num' : $scope.curNum
