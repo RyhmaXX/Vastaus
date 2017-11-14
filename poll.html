@@ -20,11 +20,11 @@
 	
 	<br>
 	
-	<textarea class="form-control" rows="5" ng-model="answer"></textarea>
+	<textarea class="form-control" rows="5" ng-model="textAnswer"></textarea>
 	
 	<br>
 	
-	<button class="btn btn-block btn-primary" ng-click="sendAnswer()">Seuraava</button>
+	<button class="btn btn-block btn-primary" ng-click="sendAnswer(textAnswer)">Seuraava</button>
 </div>
 
 <!--Numeric question-->
@@ -34,11 +34,11 @@
 	
 	<br>
 	
-	<input type="number" class="form-control" ng-model="answer"></input>
+	<input type="number" class="form-control" ng-model="numAnswer"></input>
 	
 	<br>
 	
-	<button class="btn btn-block btn-primary" ng-click="sendAnswer()">Seuraava</button>
+	<button class="btn btn-block btn-primary" ng-click="sendAnswer(numAnswer)">Seuraava</button>
 </div>
 
 <!--
