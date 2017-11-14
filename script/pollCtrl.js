@@ -6,7 +6,8 @@ app.controller("pollCtrl", function ($scope, $window, $http, $location){
 	$scope.curQuestion = "";
 	$scope.curType = 0;
 	$scope.questionCount = 0;
-	$scope.answer = null;
+	$scope.textAnswer = null;
+	$scope.numAnswer = null;
 	
 	$http.get("php/getQuestions.php").then(function(response) {
 		
@@ -35,10 +36,10 @@ app.controller("pollCtrl", function ($scope, $window, $http, $location){
 		}
 	};
 	
-	$scope.sendAnswer = function() {
+	$scope.sendAnswer = function(answer) {
 		
 		var data = {
-			'answer' : $scope.answer,
+			'answer' : answer,
 			'num' : $scope.curNum
 		};
 		
