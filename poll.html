@@ -24,7 +24,13 @@
 	
 	<br>
 	
-	<button class="btn btn-block btn-primary" ng-click="sendAnswer(textAnswer)">Seuraava</button>
+	<table style="width:100%;">
+		<tr>
+			<td><button class="btn btn-block btn-primary" ng-click="changeQuestion(-1)">Edellinen</button></td>
+			<td><button class="btn btn-block btn-primary" ng-click="sendAnswer(textAnswer)">Seuraava</button></td>
+		</tr>
+	</table>
+
 </div>
 
 <!--Numeric question-->
@@ -38,31 +44,17 @@
 	
 	<br>
 	
-	<button class="btn btn-block btn-primary" ng-click="sendAnswer(numAnswer)">Seuraava</button>
-</div>
+	<table style="width:100%;">
+		<tr>
+			<td><button class="btn btn-block btn-primary" ng-click="changeQuestion(-1)">Edellinen</button></td>
+			<td><button class="btn btn-block btn-primary" ng-click="sendAnswer(numAnswer)">Seuraava</button></td>
+		</tr>
+	</table>
 
-<!--<p>Choice question:</p>-->
-<div class="well" ng-show="curType == 100">
-	<p>Valinta kysymys:</p>
-	<h4>{{ curNum + ". " + curQuestion }}</h4>
-	
-	<br>
-	
-	<form>
-	  <label><input type="radio" ng-model="choiceAnswer" value="Hauki"> Hauki</label><br>
-	  <label><input type="radio" ng-model="choiceAnswer" value="Särki"> Särki</label><br>
-	  <label><input type="radio" ng-model="choiceAnswer" value="Ahven"> Ahven</label><br>
-	  <label><input type="radio" ng-model="choiceAnswer" value=""> Ei Valintaa</label><br>
-	</form>
-	
-	<br>
-	
-	<button class="btn btn-block btn-primary" ng-click="sendAnswer(choiceAnswer)">Seuraava</button>
 </div>
 
 <!--<p>Boolean question:</p>-->
 <div class="well" ng-show="curType == 3">
-	<p>Kyllä/ei kysymys:</p>
 	<h4>{{ curNum + ". " + curQuestion }}</h4>
 	
 	<br>
@@ -74,12 +66,36 @@
 	
 	<br>
 	
-	<button class="btn btn-block btn-primary" ng-click="sendAnswer(boolAnswer)">Seuraava</button>
+	<table style="width:100%;">
+		<tr>
+			<td><button class="btn btn-block btn-primary" ng-click="changeQuestion(-1)">Edellinen</button></td>
+			<td><button class="btn btn-block btn-primary" ng-click="sendAnswer(boolAnswer)">Seuraava</button></td>
+		</tr>
+	</table>
+
 </div>
 
-<!--<p>Monivalinta question:</p>-->
+<!--<p>Choice question:</p>-->
+<div class="well" ng-show="curType == 100">
+	<h4>{{ curNum + ". " + curQuestion }}</h4>
+	
+	<div ng-repeat="choice in choices">
+		<input type="radio" name="radioChoice" ng-model="$parent.radioChoice" value="{{choice.num}}"> {{choice.name}}
+    </div>
+	
+	<br>
+	
+	<table style="width:100%;">
+		<tr>
+			<td><button class="btn btn-block btn-primary" ng-click="changeQuestion(-1)">Edellinen</button></td>
+			<td><button class="btn btn-block btn-primary" ng-click="sendAnswer(radioChoice)">Seuraava</button></td>
+		</tr>
+	</table>
+	
+</div>
+
+<!--<p>Multiple choice question:</p>-->
 <div class="well" ng-show="curType == 101">
-	<p>Monivalinta:</p>
 	<h4>{{ curNum + ". " + curQuestion }}</h4>
 	
 	<br>
@@ -90,7 +106,45 @@
 
 	<br>
 	
-	<button class="btn btn-block btn-primary" ng-click="sendAnswer(choices)">Seuraava</button>
+	<table style="width:100%;">
+		<tr>
+			<td><button class="btn btn-block btn-primary" ng-click="changeQuestion(-1)">Edellinen</button></td>
+			<td><button class="btn btn-block btn-primary" ng-click="sendAnswer(choices)">Seuraava</button></td>
+		</tr>
+	</table>
+	
+</div>
+
+<!--<p>Matrix question:</p>-->
+<div class="well" ng-show="curType == 201">
+	<h4>{{ curNum + ". " + curQuestion }}</h4>
+	
+	<center><h4>{{matrix.header}}</h4></center>
+	
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<td></td>
+				<th ng-repeat="column in matrix.columns">{{column.title}}</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr ng-repeat="row in matrix.rows">
+				<th>{{row.title}}</th>
+				<td ng-repeat="column in matrix.columns"><input style="width:100%;" type="{{inputTypes[column.type]}}" ng-model="matrixAnswer[row.num][column.num]"></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<br>
+	
+	<table style="width:100%;">
+		<tr>
+			<td><button class="btn btn-block btn-primary" ng-click="changeQuestion(-1)">Edellinen</button></td>
+			<td><button class="btn btn-block btn-primary" ng-click="sendAnswer(matrixAnswer)">Seuraava</button></td>
+		</tr>
+	</table>
 </div>
 
 <br>
@@ -100,5 +154,8 @@
 <p>Q: {{curQuestion}}</p>
 <p>type: {{curType}}</p>
 <p>A: {{answer}}</p>
-<p>colors: {{choices}}</p>
+<p>R: {{radioChoice}}</p>
+<p>choises: {{choices}}</p>
+<p>matrix: {{matrix}}</p>
+<p>MA: {{matrixAnswer}}</p>
 -->
