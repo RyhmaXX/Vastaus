@@ -8,6 +8,27 @@ app.controller("pollCtrl", function ($scope, $window, $http, $location){
 	$scope.questionCount = 0;
 	$scope.textAnswer = null;
 	$scope.numAnswer = null;
+	$scope.oldAnswers = null;
+	
+	var setOldAnswer = function() {
+		if ($scope.oldAnswers != null) {
+			for (var i = 0; i < $scope.oldAnswers.length; i++) {
+				if ($scope.oldAnswers[i].question == $scope.curNum) {
+					switch($scope.curType) {
+						case 1:
+							$scope.textAnswer = $scope.oldAnswers[i].answer;
+							break;
+						case 2:
+							$scope.numAnswer = $scope.oldAnswers[i].answer;
+							break;
+						default:
+							alert("error with answers!");
+					}
+					i = $scope.oldAnswers.length;
+				}
+			}
+		}
+	};
 	
 	$http.get("php/getQuestions.php").then(function(response) {
 		
@@ -17,6 +38,12 @@ app.controller("pollCtrl", function ($scope, $window, $http, $location){
 			$scope.curQuestion = $scope.questions[$scope.curInd].question;
 			$scope.curType = $scope.questions[$scope.curInd].type;
 			$scope.questionCount = $scope.questions.length;
+			
+			if (response.data.answers != null) {
+				alert("Olet jo vastannut tähän kyselyyn, voit halutessasi muuttaa vastauksiasi.");
+				$scope.oldAnswers = response.data.answers;
+				setOldAnswer();
+			}
 		} else {
 			$location.path("/");
 		}
@@ -33,6 +60,8 @@ app.controller("pollCtrl", function ($scope, $window, $http, $location){
 			$scope.curNum = $scope.questions[$scope.curInd].num;
 			$scope.curQuestion = $scope.questions[$scope.curInd].question;
 			$scope.curType = $scope.questions[$scope.curInd].type;
+			
+			setOldAnswer();
 		}
 	};
 	
