@@ -99,11 +99,11 @@
 	<h4>{{ curNum + ". " + curQuestion }}</h4>
 	
 	<br>
-	
+
     <div ng-repeat="(choice,enabled) in choices">
 		<input type="checkbox" ng-model="choices[choice]"> {{choice}}
     </div>
-
+	
 	<br>
 	
 	<table style="width:100%;">
@@ -148,6 +148,7 @@
 </div>
 
 <br>
+<p>choises: {{choices}}</p>
 <!--
 <p>curNum: {{curNum}}</p>
 <p>curInd: {{curInd}}</p>
