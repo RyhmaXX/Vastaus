@@ -116,6 +116,27 @@ app.controller("pollCtrl", function ($scope, $window, $http, $location){
 		});
 	};
 	
+	var fetchMatrixColumnTypes = function() {
+		
+		$http.get("php/getMatrixColumnTypes.php").then(function(response) {
+			
+			if (response.data.code == 0) {
+				
+				var types = response.data.types;
+				
+				var array = [];
+				
+				for (i = 0; i < types.length; i++) {
+					array[types[i].id] = types[i].name;
+				}
+				
+				$scope.matrixInputTypes = array;
+			} else {
+				alert("Matriisityyppejä ei saatu noudettua!");
+			}
+		});
+	};
+	
 	$scope.changeQuestion = function(num) {
 		
 		fetch();
@@ -160,4 +181,5 @@ app.controller("pollCtrl", function ($scope, $window, $http, $location){
 	};
 	
 	fetch();
+	//fetchMatrixColumnTypes();
 });
